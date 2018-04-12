@@ -3,6 +3,7 @@ package me310.hella.shakeremotecontrol;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.os.Handler;
 import android.os.ParcelUuid;
 import android.util.Log;
 
@@ -12,15 +13,17 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.BiConsumer;
 
 public class BluetoothHandler {
 
-    private final String MAC_ADDRESS = "00:18:E4:00:12:32"; // MAC-Adress of bluetooth module
+    private final String MAC_ADDRESS = "00:18:E4:00:12:32"; // MAC-Adress of bluetooth module // HC-05 : 98:D3:31:F5:40:0D
     private OutputStream outputStream;
     private InputStream inStream;
     private final Map<Controls, String> controlMapping= new HashMap<>();
+    public BluetoothHandler(BiConsumer<Float, Float> positionConsumer) throws IOException {
 
-    public BluetoothHandler() throws IOException {
+
         initControlMapping();
         BluetoothAdapter blueAdapter = BluetoothAdapter.getDefaultAdapter();
         if (blueAdapter != null) {
@@ -34,6 +37,8 @@ public class BluetoothHandler {
                     socket.connect();
                     outputStream = socket.getOutputStream();
                     inStream = socket.getInputStream();
+                    final Thread readThread = new Thread(new BluetoothReader(inStream, positionConsumer));
+                    readThread.start();
                 }
 
                 Log.e("error", "No appropriate paired devices.");
@@ -50,12 +55,7 @@ public class BluetoothHandler {
 
     public void write(Controls c) throws IOException {
         String s = controlMapping.get(c);
-        Log.d("error","Push data");
         outputStream.write(s.getBytes());
-    }
-
-    public void read(){
-        throw new UnsupportedOperationException();
     }
 
 }
