@@ -3,7 +3,6 @@ package me310.hella.shakeremotecontrol;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
-import android.os.Handler;
 import android.os.ParcelUuid;
 import android.util.Log;
 

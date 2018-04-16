@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import java.io.IOException;
 
@@ -28,6 +30,18 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        TextView helloWorldTextView = findViewById(R.id.helloWorldTextView);
+
+
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener(view -> {
+            System.out.println("Button pressed");
+            int [] buttonLocation = new int[2];
+            button.getLocationOnScreen(buttonLocation);
+            helloWorldTextView.setText("Button location\nx = "+buttonLocation[0]+"\ny = "+ buttonLocation[1]);
+            System.out.println("Button position: " + buttonLocation[0] + "," + buttonLocation[1] );
+        });
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
             try {
@@ -35,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            int[] buttonLocation = {-1,-2};
+            button.getLocationOnScreen(buttonLocation);
+            triggerTouch(buttonLocation[0], buttonLocation[1]);
         });
     }
 
@@ -78,7 +95,8 @@ public class MainActivity extends AppCompatActivity {
                 metaState
         );
 
-        View view = getWindow().getDecorView();
+        //View view = getWindow().getDecorView();
+        View view = findViewById(R.id.relativeLayout);
 
         // Dispatch touch event to view
         view.dispatchTouchEvent(touchEvent);
