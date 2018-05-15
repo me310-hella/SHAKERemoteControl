@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,12 +18,13 @@ public class BluetoothReader implements Runnable {
     private final Handler HANDLER = new Handler();
     private final byte[] readBuffer = new byte[1024];
     private int readBufferPosition = 0;
+    private TouchEventHandler touchEventHandler;
+    private BluetoothHandler bluetoothHandler;
 
-    private View view;
-
-    public BluetoothReader(InputStream inputStream, View view){
-        this.view = view;
+    public BluetoothReader(InputStream inputStream, View view, BluetoothHandler bluetoothHandler){
         this.mmInputStream = inputStream;
+        touchEventHandler = new TouchEventHandler(view);
+        this.bluetoothHandler = bluetoothHandler;
     }
 
     private float[] toFloats (String sentData){
@@ -43,6 +45,7 @@ public class BluetoothReader implements Runnable {
                 int bytesAvailable = mmInputStream.available();
                 if(bytesAvailable > 0)
                 {
+
                     byte[] packetBytes = new byte[bytesAvailable];
                     mmInputStream.read(packetBytes);
 
@@ -58,13 +61,19 @@ public class BluetoothReader implements Runnable {
                             System.out.println("data: " + data);
                             readBufferPosition = 0;
 
+                            if (data.equals("1,1")){
+                                //bluetoothHandler.write(Controls.LED_TOGGLE);
+                                TextView tv = this.touchEventHandler.getView().findViewById(R.id.helloWorldTextView);
+                                tv.setText("received data from arduino");
+                            }
+
                             final float[] position = toFloats(data);
 
                             HANDLER.post(new Runnable()
                             {
                                 public void run()
                                 {
-                                    triggerTouch(position[0], position[1]);
+                                    touchEventHandler.triggerTouch(position[0], position[1]);
                                 }
                             });
                         }
@@ -80,28 +89,6 @@ public class BluetoothReader implements Runnable {
                 Thread.currentThread().interrupt();
             }
         }
-    }
-
-    private void triggerTouch(float x, float y){
-        long downTime = SystemClock.uptimeMillis();
-        long eventTime = SystemClock.uptimeMillis() + 100;
-
-        System.out.println("x: " + x);
-        System.out.println("y: " + y);
-
-        // List of meta states found here:     developer.android.com/reference/android/view/KeyEvent.html#getMetaState()
-        int metaState = 0;
-        MotionEvent touchEvent = MotionEvent.obtain(
-                downTime,
-                eventTime,
-                MotionEvent.ACTION_UP,
-                x,
-                y,
-                metaState
-        );
-
-        // Dispatch touch event to view
-        view.dispatchTouchEvent(touchEvent);
     }
 
 }

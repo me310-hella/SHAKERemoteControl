@@ -39,7 +39,7 @@ public class BluetoothHandler {
                             socket.connect();
                             outputStream = socket.getOutputStream();
                             inStream = socket.getInputStream();
-                            final Thread readThread = new Thread(new BluetoothReader(inStream, view));
+                            final Thread readThread = new Thread(new BluetoothReader(inStream, view, this));
                             readThread.start();
                             break;
                         }
