@@ -1,6 +1,7 @@
 package me310.hella.shakeremotecontrol;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +18,7 @@ import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
-    private BluetoothHandler bluetoothHandler;
+    //private BluetoothHandler bluetoothHandler;
 
     public MainActivity() throws IOException {
     }
