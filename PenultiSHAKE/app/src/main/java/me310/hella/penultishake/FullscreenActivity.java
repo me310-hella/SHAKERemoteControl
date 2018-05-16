@@ -3,6 +3,7 @@ package me310.hella.penultishake;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -16,6 +17,8 @@ import java.io.IOException;
 public class FullscreenActivity extends AppCompatActivity {
 
     private BluetoothHandler bluetoothHandler;
+    private ImageHandler imageHandler;
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +33,16 @@ public class FullscreenActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
+        imageView = findViewById(R.id.imageView);
+        imageHandler = new ImageHandler(imageView, getResources());
+
         // Set up the user interaction to manually show or hide the system UI.
-        /*mImageView.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.imageView).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                nextImage();
+                imageHandler.nextImage();
             }
-        });*/
+        });
 
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
@@ -49,9 +55,7 @@ public class FullscreenActivity extends AppCompatActivity {
 
 
         try {
-            ImageView imageView = findViewById(R.id.imageView);
-            ImageHandler im = new ImageHandler(imageView, getResources());
-            bluetoothHandler = new BluetoothHandler(im);
+            bluetoothHandler = new BluetoothHandler(imageHandler);
         }
         catch (IOException e){
             e.printStackTrace();

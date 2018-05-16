@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0099cc"
+    android:background="#000000"
     tools:context=".FullscreenActivity">
 
     <ImageView
@@ -13,6 +13,7 @@
         android:adjustViewBounds="false"
         android:cropToPadding="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/draft_page_01" />
+        android:src="@drawable/draft_page_01"
+    />
 
 </FrameLayout>

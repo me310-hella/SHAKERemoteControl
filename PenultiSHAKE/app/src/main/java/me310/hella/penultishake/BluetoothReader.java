@@ -1,9 +1,5 @@
 package me310.hella.penultishake;
 
-import android.os.Handler;
-import android.view.View;
-import android.widget.TextView;
-
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -11,16 +7,13 @@ public class BluetoothReader implements Runnable {
 
     InputStream mmInputStream;
     private final byte DELIMITER = 10;
-    private final Handler HANDLER = new Handler();
     private final byte[] readBuffer = new byte[1024];
     private int readBufferPosition = 0;
-    private BluetoothHandler bluetoothHandler;
 
     private ImageHandler imageHandler;
 
     public BluetoothReader(ImageHandler imageHandler, InputStream inputStream, BluetoothHandler bluetoothHandler){
         this.mmInputStream = inputStream;
-        this.bluetoothHandler = bluetoothHandler;
         this.imageHandler = imageHandler;
     }
 
