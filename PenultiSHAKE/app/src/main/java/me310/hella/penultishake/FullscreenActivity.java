@@ -6,12 +6,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
 public class FullscreenActivity extends AppCompatActivity {
+
+    private ImageView mImageView;
+    private int currentImageID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,12 +30,15 @@ public class FullscreenActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
+        mImageView = findViewById(R.id.imageView);
+        currentImageID = R.drawable.draft_page_01;
+
 
         // Set up the user interaction to manually show or hide the system UI.
-        findViewById(R.id.imageView).setOnTouchListener(new View.OnTouchListener() {
+        mImageView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                // TODO: change images
+                nextImage();
                 return true;
             }
         });
@@ -44,6 +51,11 @@ public class FullscreenActivity extends AppCompatActivity {
         // Trigger the initial hide() shortly after the activity has been
         // created, to briefly hint to the user that UI controls
         // are available.
+    }
+
+    private void nextImage(){
+        currentImageID = currentImageID < R.drawable.draft_page_23 ? currentImageID + 1 : R.drawable.draft_page_01;
+        mImageView.setImageDrawable(getDrawable(currentImageID));
     }
 
 
