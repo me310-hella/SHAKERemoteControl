@@ -16,7 +16,7 @@ import java.util.Set;
 
 public class BluetoothHandler {
 
-    private final String MAC_ADDRESS = "00:18:E4:00:12:32"; // MAC-Adress of bluetooth module // HC-05 : 98:D3:31:F5:40:0D
+    private final String MAC_ADDRESS = "00:18:E4:00:12:32"; // MAC-Adress of bluetooth module // HC-05 : 98:D3:31:F5:40:0D HC-06: 00:18:E4:00:12:32
     private OutputStream outputStream;
     private InputStream inStream;
     private final Map<Controls, String> controlMapping= new HashMap<>();
@@ -46,7 +46,7 @@ public class BluetoothHandler {
                     }
                 }
 
-                Log.e("error", "No appropriate paired devices.");
+                else Log.e("error", "No appropriate paired devices.");
             } else {
                 Log.e("error", "Bluetooth is disabled.");
             }

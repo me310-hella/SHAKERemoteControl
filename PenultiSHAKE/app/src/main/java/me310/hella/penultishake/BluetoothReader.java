@@ -35,7 +35,7 @@ public class BluetoothReader implements Runnable {
                 int bytesAvailable = mmInputStream.available();
                 if(bytesAvailable > 0)
                 {
-
+                    //System.out.println("recieved: " + bytesAvailable);
                     byte[] packetBytes = new byte[bytesAvailable];
                     mmInputStream.read(packetBytes);
 
@@ -50,11 +50,13 @@ public class BluetoothReader implements Runnable {
                             String data = new String(encodedBytes, "US-ASCII");
                             System.out.println("data: " + data);
                             readBufferPosition = 0;
+                            //System.out.println("recieved: " + data);
+                            //if (data.equals("1,1")){
 
-                            if (data.equals("1,1")){
-                                imageHandler.nextImage();
 
-                            }
+                            //}
+
+                            imageHandler.nextImage();
                         }
                         else
                         {

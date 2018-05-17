@@ -1,11 +1,12 @@
 package me310.hella.penultishake;
 
+import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.widget.ImageView;
 
-public class ImageHandler {
+public class ImageHandler extends Activity{
     private ImageView mImageView;
     private Resources mResources;
     private int currentImageIDIndex;
@@ -47,9 +48,14 @@ public class ImageHandler {
     }
 
     public void nextImage(){
-        currentImageIDIndex = currentImageIDIndex < imageIDs.length -1 ? currentImageIDIndex + 1 : 0;
-        mImageView.setImageBitmap(
-                decodeSampledBitmapFromResource(mResources, imageIDs[currentImageIDIndex], REQUIRED_IMAGE_WIDTH, REQUIRED_IMAGE_HEIGHT));
+        runOnUiThread(new Runnable() {
+            public void run() {
+                currentImageIDIndex = currentImageIDIndex < imageIDs.length -1 ? currentImageIDIndex + 1 : 0;
+                mImageView.setImageBitmap(
+                        decodeSampledBitmapFromResource(mResources, imageIDs[currentImageIDIndex], REQUIRED_IMAGE_WIDTH, REQUIRED_IMAGE_HEIGHT));
+            }
+        });
+
     }
 
     public static int calculateInSampleSize(
