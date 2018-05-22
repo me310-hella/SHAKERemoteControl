@@ -48,12 +48,8 @@ public class BluetoothReader implements Runnable {
                             byte[] encodedBytes = new byte[readBufferPosition];
                             System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.length);
                             String data = new String(encodedBytes, "US-ASCII");
-                            System.out.println("data: " + data);
+                            //System.out.println("data: " + data);
                             readBufferPosition = 0;
-
-                            if (data.equals("1,1")){
-
-                            }
                             final float[] position = toFloats(data);
                             functionHandler.executeFunction(position);
                         }
