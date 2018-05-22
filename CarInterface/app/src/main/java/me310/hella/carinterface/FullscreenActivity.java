@@ -47,13 +47,25 @@ public class FullscreenActivity extends AppCompatActivity {
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
 
-        functionHandler = new FunctionHandler();
-        functionHandler.registerButton((Button)findViewById(R.id.button1));
-        functionHandler.registerButton((Button)findViewById(R.id.button2));
-        functionHandler.registerButton((Button)findViewById(R.id.button3));
-        functionHandler.registerButton((Button)findViewById(R.id.button4));
-
         //BluetoothHandler bluetoothHandler = new BluetoothHandler(functionHandler);
+
+        functionHandler = new FunctionHandler();
+        //Button b = findViewById(R.id.button1);
+        //functionHandler.registerButton(b, Controls.LED_TOGGLE);
+        functionHandler.registerButton((Button)findViewById(R.id.button1), Controls.LED_TOGGLE);        // x: 53, y: 634
+        functionHandler.registerButton((Button)findViewById(R.id.button2), Controls.FUNCTION_TWO);      // x: 593 y: 634
+        functionHandler.registerButton((Button)findViewById(R.id.button3), Controls.FUNCTION_THREE);    // x: 53 y: 1304
+        functionHandler.registerButton((Button)findViewById(R.id.button4), Controls.FUNCTION_FOUR);     // x: 593 y: 1304
+
+        /*final Button b1 = (Button) findViewById(R.id.button4);
+        b1.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                int[] position = new int[2];
+                b1.getLocationOnScreen(position);
+                b1.setText("x: " + position[0] + " y: " + position[1]);
+            }
+        });*/
+
 
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away

@@ -9,8 +9,6 @@ import android.util.Log;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 public class BluetoothHandler {
@@ -18,11 +16,9 @@ public class BluetoothHandler {
     private final String MAC_ADDRESS = "00:18:E4:00:12:32"; // MAC-Adress of bluetooth module // HC-05 : 98:D3:31:F5:40:0D
     private OutputStream outputStream;
     private InputStream inStream;
-    private final Map<Controls, String> controlMapping= new HashMap<>();
     public BluetoothHandler(FunctionHandler functionHandler) throws IOException {
 
 
-        initControlMapping();
         BluetoothAdapter blueAdapter = BluetoothAdapter.getDefaultAdapter();
         if (blueAdapter != null) {
             if (blueAdapter.isEnabled()) {
@@ -52,14 +48,8 @@ public class BluetoothHandler {
         }
     }
 
-    private void initControlMapping() {
-        /* Add control mappings for serialization */
-        controlMapping.put(Controls.LED_TOGGLE, "1");
-    }
-
-    public void write(Controls c) throws IOException {
-        String s = controlMapping.get(c);
-        outputStream.write(s.getBytes());
+    public void sendControl(Controls c) throws IOException {
+        outputStream.write(c.name().getBytes());
     }
 
 }

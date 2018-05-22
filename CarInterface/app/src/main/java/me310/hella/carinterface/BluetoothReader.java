@@ -5,6 +5,8 @@ import java.io.InputStream;
 
 public class BluetoothReader implements Runnable {
 
+    private static final boolean USE_BUTTON_INPUT = true;
+
     InputStream mmInputStream;
     private final byte DELIMITER = 10;
     private final byte[] readBuffer = new byte[1024];
@@ -17,12 +19,12 @@ public class BluetoothReader implements Runnable {
         this.functionHandler = functionHandler;
     }
 
-    private float[] toFloats (String sentData){
+    private int[] toInts (String sentData){
         String[] splitData = sentData.split(",");
-        float [] floatData = new float[2];
-        floatData[0] = Float.parseFloat(splitData[0]);
-        floatData[1] = Float.parseFloat(splitData[1]);
-        return floatData;
+        int [] intData = new int[2];
+        intData[0] = Integer.parseInt(splitData[0]);
+        intData[1] = Integer.parseInt(splitData[1]);
+        return intData;
         //return Arrays.stream(splitData).map(Float::valueOf).toArray(Float[]::new);
     }
 
@@ -50,8 +52,12 @@ public class BluetoothReader implements Runnable {
                             String data = new String(encodedBytes, "US-ASCII");
                             //System.out.println("data: " + data);
                             readBufferPosition = 0;
-                            final float[] position = toFloats(data);
-                            functionHandler.executeFunction(position);
+                            if(USE_BUTTON_INPUT){
+                                processButtonInput(data);
+                            }
+                            else{
+                                processPositionInput(data);
+                            }
                         }
                         else
                         {
@@ -65,6 +71,16 @@ public class BluetoothReader implements Runnable {
                 Thread.currentThread().interrupt();
             }
         }
+    }
+
+    private void processButtonInput(String data) {
+        int buttonNumber = Integer.parseInt(data);
+        functionHandler.executeFunction(buttonNumber);
+    }
+
+    private void processPositionInput(String data){
+        final int[] position = toInts(data);
+        functionHandler.executeFunction(position);
     }
 
 }
