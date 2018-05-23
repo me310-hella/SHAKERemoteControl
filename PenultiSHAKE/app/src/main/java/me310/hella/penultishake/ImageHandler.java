@@ -55,7 +55,16 @@ public class ImageHandler extends Activity{
                         decodeSampledBitmapFromResource(mResources, imageIDs[currentImageIDIndex], REQUIRED_IMAGE_WIDTH, REQUIRED_IMAGE_HEIGHT));
             }
         });
+    }
 
+    public void previousImage(){
+        runOnUiThread(new Runnable() {
+            public void run() {
+                currentImageIDIndex = currentImageIDIndex > 0 ? currentImageIDIndex - 1 : imageIDs.length - 1;
+                mImageView.setImageBitmap(
+                        decodeSampledBitmapFromResource(mResources, imageIDs[currentImageIDIndex], REQUIRED_IMAGE_WIDTH, REQUIRED_IMAGE_HEIGHT));
+            }
+        });
     }
 
     public static int calculateInSampleSize(

@@ -51,12 +51,12 @@ public class BluetoothReader implements Runnable {
                             System.out.println("data: " + data);
                             readBufferPosition = 0;
                             //System.out.println("recieved: " + data);
-                            //if (data.equals("1,1")){
-
-
-                            //}
-
-                            imageHandler.nextImage();
+                            if (data.equals("next")){
+                                imageHandler.nextImage();
+                            }
+                            else if (data.equals("prev")){
+                                imageHandler.previousImage();
+                            }
                         }
                         else
                         {
