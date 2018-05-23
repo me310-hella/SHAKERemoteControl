@@ -5,18 +5,18 @@ import java.io.InputStream;
 
 public class BluetoothReader implements Runnable {
 
-    private static final boolean USE_BUTTON_INPUT = true;
-
     InputStream mmInputStream;
     private final byte DELIMITER = 10;
     private final byte[] readBuffer = new byte[1024];
     private int readBufferPosition = 0;
     private FunctionHandler functionHandler;
+    private boolean useButtonInput;
 
 
-    public BluetoothReader(FunctionHandler functionHandler, InputStream inputStream, BluetoothHandler bluetoothHandler){
+    public BluetoothReader(FunctionHandler functionHandler, InputStream inputStream, boolean useButtonInput){
         this.mmInputStream = inputStream;
         this.functionHandler = functionHandler;
+        this.useButtonInput = useButtonInput;
     }
 
     private int[] toInts (String sentData){
@@ -52,7 +52,7 @@ public class BluetoothReader implements Runnable {
                             String data = new String(encodedBytes, "US-ASCII");
                             //System.out.println("data: " + data);
                             readBufferPosition = 0;
-                            if(USE_BUTTON_INPUT){
+                            if(useButtonInput){
                                 processButtonInput(data);
                             }
                             else{

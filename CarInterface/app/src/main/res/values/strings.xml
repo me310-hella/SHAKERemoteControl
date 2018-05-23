@@ -9,7 +9,7 @@
     <string name="prompt_mac_address">Bluetooth MAC-ADDRESS (aa:bb:cc:dd)</string>
     <string name="action_sign_in">Connect</string>
     <string name="action_sign_in_short">Connect</string>
-    <string name="prompt_switch">use simple button input (not implemented yet)</string>
+    <string name="prompt_switch">use simple button input</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>

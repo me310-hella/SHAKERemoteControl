@@ -18,9 +18,9 @@ public class FunctionHandler extends Activity{
     private List<Button> buttons;
     private Map<Button, Controls> controlMap;
 
-    public FunctionHandler(String macAddress){
+    public FunctionHandler(String macAddress, boolean useButtonInput){
         try {
-            this.bluetoothHandler = new BluetoothHandler(this, macAddress);
+            this.bluetoothHandler = new BluetoothHandler(this, macAddress, useButtonInput);
         } catch (IOException e) {
             e.printStackTrace();
         }

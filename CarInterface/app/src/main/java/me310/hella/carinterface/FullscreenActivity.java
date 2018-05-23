@@ -37,8 +37,9 @@ public class FullscreenActivity extends AppCompatActivity {
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
         String macAddress = intent.getStringExtra(SetupActivity.MAC_ADDRESS);
+        boolean useButtonInput = intent.getBooleanExtra(SetupActivity.USE_BUTTON_INPUT, true);
 
-        functionHandler = new FunctionHandler(macAddress);
+        functionHandler = new FunctionHandler(macAddress, useButtonInput);
         functionHandler.registerButton((Button)findViewById(R.id.button1), Controls.LED_TOGGLE);        // x: 53, y: 634
         functionHandler.registerButton((Button)findViewById(R.id.button2), Controls.FUNCTION_TWO);      // x: 593 y: 634
         functionHandler.registerButton((Button)findViewById(R.id.button3), Controls.FUNCTION_THREE);    // x: 53 y: 1304

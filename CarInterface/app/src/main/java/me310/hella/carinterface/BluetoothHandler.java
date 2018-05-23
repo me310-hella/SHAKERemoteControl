@@ -16,7 +16,7 @@ public class BluetoothHandler {
     private final String DEFAULT_MAC_ADDRESS = "00:18:E4:00:12:32"; // MAC-Adress of bluetooth module // HC-05 : 98:D3:31:F5:40:0D
     private OutputStream outputStream;
     private InputStream inStream;
-    public BluetoothHandler(FunctionHandler functionHandler, String macAddress) throws IOException {
+    public BluetoothHandler(FunctionHandler functionHandler, String macAddress, boolean useButtonInput) throws IOException {
 
 
         BluetoothAdapter blueAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -35,7 +35,7 @@ public class BluetoothHandler {
                             socket.connect();
                             outputStream = socket.getOutputStream();
                             inStream = socket.getInputStream();
-                            final Thread readThread = new Thread(new BluetoothReader(functionHandler, inStream, this));
+                            final Thread readThread = new Thread(new BluetoothReader(functionHandler, inStream, useButtonInput));
                             readThread.start();
                             break;
                         }

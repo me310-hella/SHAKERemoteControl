@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 
 /**
@@ -22,7 +23,8 @@ import android.widget.TextView;
  */
 public class SetupActivity extends AppCompatActivity {
 
-    public static final String MAC_ADDRESS = "mac_address";//"com.example.myfirstapp.MESSAGE";
+    public static final String MAC_ADDRESS = "mac_address";
+    public static final String USE_BUTTON_INPUT = "useButtonInput";
     private static SharedPreferences sharedPreferences;
 
     /**
@@ -202,6 +204,7 @@ public class SetupActivity extends AppCompatActivity {
                 EditText editText = (EditText) findViewById(R.id.mac_address);
                 String macAddress = editText.getText().toString();
                 intent.putExtra(MAC_ADDRESS, macAddress);
+                intent.putExtra(USE_BUTTON_INPUT, ((Switch)findViewById(R.id.input_switch)).isChecked());
                 startActivity(intent);
 
             } else {
