@@ -41,7 +41,12 @@ public class FunctionHandler extends Activity{
                 setButtonColorMock(button);
                 break;
             }*/
-            Rect extent = button.getClipBounds();
+            //Rect extent = button.getClipBounds();
+
+            int[] buttonPos = new int[2];
+            button.getLocationOnScreen(buttonPos);
+            final int EXTENT_RADIUS = 50;
+            Rect extent = new Rect(buttonPos[0] - EXTENT_RADIUS, buttonPos[1] - EXTENT_RADIUS, buttonPos[0] + EXTENT_RADIUS, buttonPos[1] + EXTENT_RADIUS);
             if(extent.contains(touchPosition[0], touchPosition[1])){
                 setButtonColorMock(button);
                 try {
