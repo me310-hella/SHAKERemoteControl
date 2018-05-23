@@ -13,13 +13,14 @@ import java.util.Set;
 
 public class BluetoothHandler {
 
-    private final String MAC_ADDRESS = "00:18:E4:00:12:32"; // MAC-Adress of bluetooth module // HC-05 : 98:D3:31:F5:40:0D
+    private final String DEFAULT_MAC_ADDRESS = "00:18:E4:00:12:32"; // MAC-Adress of bluetooth module // HC-05 : 98:D3:31:F5:40:0D
     private OutputStream outputStream;
     private InputStream inStream;
-    public BluetoothHandler(FunctionHandler functionHandler) throws IOException {
+    public BluetoothHandler(FunctionHandler functionHandler, String macAddress) throws IOException {
 
 
         BluetoothAdapter blueAdapter = BluetoothAdapter.getDefaultAdapter();
+
         if (blueAdapter != null) {
             if (blueAdapter.isEnabled()) {
                 Set<BluetoothDevice> bondedDevices = blueAdapter.getBondedDevices();
@@ -27,7 +28,7 @@ public class BluetoothHandler {
                 BluetoothDevice desiredDevice;
                 if(bondedDevices.size() > 0) {
                     for(BluetoothDevice device : bondedDevices){
-                        if(device.toString().equals(MAC_ADDRESS)){
+                        if(device.toString().equals(macAddress)){
                             desiredDevice = device;
                             ParcelUuid[] uuids = desiredDevice.getUuids();
                             BluetoothSocket socket = desiredDevice.createRfcommSocketToServiceRecord(uuids[0].getUuid());

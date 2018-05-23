@@ -3,9 +3,9 @@ package me310.hella.carinterface;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 
@@ -19,12 +19,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -32,17 +28,13 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.Manifest.permission.READ_CONTACTS;
-
 /**
  * A login screen that offers login via email/password.
  */
 public class SetupActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
-    /**
-     * Id to identity READ_CONTACTS permission request.
-     */
-    private static final int REQUEST_READ_CONTACTS = 0;
+    public static final String MAC_ADDRESS = "mac_address";//"com.example.myfirstapp.MESSAGE";
+    private static SharedPreferences sharedPreferences;
 
     /**
      * A dummy authentication store containing known user names and passwords.
@@ -54,10 +46,10 @@ public class SetupActivity extends AppCompatActivity implements LoaderCallbacks<
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-    private UserLoginTask mAuthTask = null;
+    private SetupTask mSetupTask = null;
 
     // UI references.
-    private AutoCompleteTextView mEmailView;
+    private TextView mMacAddressView;
     private View mProgressView;
     private View mLoginFormView;
 
@@ -66,63 +58,22 @@ public class SetupActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup);
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-        populateAutoComplete();
+        mMacAddressView = (TextView) findViewById(R.id.mac_address);
 
-
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+        Button mStartButton = (Button) findViewById(R.id.start_button);
+        mStartButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                attemptStart();
             }
         });
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
-    }
 
-    private void populateAutoComplete() {
-        if (!mayRequestContacts()) {
-            return;
-        }
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        getLoaderManager().initLoader(0, null, this);
-    }
-
-    private boolean mayRequestContacts() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            return true;
-        }
-        if (checkSelfPermission(READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
-            return true;
-        }
-        if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
-            Snackbar.make(mEmailView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(android.R.string.ok, new View.OnClickListener() {
-                        @Override
-                        @TargetApi(Build.VERSION_CODES.M)
-                        public void onClick(View v) {
-                            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
-                        }
-                    });
-        } else {
-            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
-        }
-        return false;
-    }
-
-    /**
-     * Callback received when a permissions request has been completed.
-     */
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_READ_CONTACTS) {
-            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                populateAutoComplete();
-            }
-        }
+        mMacAddressView.setText(sharedPreferences.getString("macAddress", ""));
     }
 
 
@@ -131,29 +82,32 @@ public class SetupActivity extends AppCompatActivity implements LoaderCallbacks<
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    private void attemptLogin() {
-        if (mAuthTask != null) {
+    private void attemptStart() {
+        if (mSetupTask != null) {
             return;
         }
 
         // Reset errors.
-        mEmailView.setError(null);
+        mMacAddressView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
+
+        String macAddress = mMacAddressView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
+        // Check for a valid macAddress address.
+        if (TextUtils.isEmpty(macAddress)) {
+            mMacAddressView.setError(getString(R.string.error_field_required));
+            focusView = mMacAddressView;
             cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
-            cancel = true;
+        } else if (!isMacAddressValid(macAddress)) {
+            //mMacAddressView.setError(getString(R.string.error_invalid_email));
+            //focusView = mMacAddressView;
+            //cancel = true;
+
+            //macAddress = sharedPreferences.getString("macAddress", "");
         }
 
         if (cancel) {
@@ -164,19 +118,15 @@ public class SetupActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            //mAuthTask = new UserLoginTask(email, password);
-            //mAuthTask.execute((Void) null);
+            sharedPreferences.edit().putString("macAddress", macAddress).apply();
+            mSetupTask = new SetupTask(macAddress);
+            mSetupTask.execute((Void) null);
         }
     }
 
-    private boolean isEmailValid(String email) {
+    private boolean isMacAddressValid(String macAddress) {
         //TODO: Replace this with your own logic
-        return email.contains("@");
-    }
-
-    private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return macAddress.contains(":");
     }
 
     /**
@@ -240,24 +190,12 @@ public class SetupActivity extends AppCompatActivity implements LoaderCallbacks<
             emails.add(cursor.getString(ProfileQuery.ADDRESS));
             cursor.moveToNext();
         }
-
-        addEmailsToAutoComplete(emails);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
 
     }
-
-    private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
-        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(SetupActivity.this,
-                        android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
-
-        mEmailView.setAdapter(adapter);
-    }
-
 
     private interface ProfileQuery {
         String[] PROJECTION = {
@@ -273,14 +211,12 @@ public class SetupActivity extends AppCompatActivity implements LoaderCallbacks<
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+    public class SetupTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final String mEmail;
-        private final String mPassword;
+        private final String mMacAddress;
 
-        UserLoginTask(String email, String password) {
-            mEmail = email;
-            mPassword = password;
+        SetupTask(String macAddress) {
+            mMacAddress = macAddress;
         }
 
         @Override
@@ -296,10 +232,10 @@ public class SetupActivity extends AppCompatActivity implements LoaderCallbacks<
 
             for (String credential : DUMMY_CREDENTIALS) {
                 String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
+                /*if (pieces[0].equals(mEmail)) {
                     // Account exists, return true if the password matches.
                     return pieces[1].equals(mPassword);
-                }
+                }*/
             }
 
             // TODO: register the new account here.
@@ -308,11 +244,17 @@ public class SetupActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
+            mSetupTask = null;
             showProgress(false);
 
             if (success) {
                 finish();
+                Intent intent = new Intent(SetupActivity.this, FullscreenActivity.class);
+                EditText editText = (EditText) findViewById(R.id.mac_address);
+                String macAddress = editText.getText().toString();
+                intent.putExtra(MAC_ADDRESS, macAddress);
+                startActivity(intent);
+
             } else {
                 //mPasswordView.setError(getString(R.string.error_incorrect_password));
                 //mPasswordView.requestFocus();
@@ -321,7 +263,7 @@ public class SetupActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected void onCancelled() {
-            mAuthTask = null;
+            mSetupTask = null;
             showProgress(false);
         }
     }

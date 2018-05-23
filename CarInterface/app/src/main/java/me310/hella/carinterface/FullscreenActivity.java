@@ -1,5 +1,7 @@
 package me310.hella.carinterface;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -18,6 +20,7 @@ public class FullscreenActivity extends AppCompatActivity {
     private View mControlsView;
 
     private FunctionHandler functionHandler;
+    private SharedPreferences sharedPref;
 
     /**
      * Touch listener to use for in-layout UI controls to delay hiding the
@@ -49,7 +52,11 @@ public class FullscreenActivity extends AppCompatActivity {
 
         //BluetoothHandler bluetoothHandler = new BluetoothHandler(functionHandler);
 
-        functionHandler = new FunctionHandler();
+        // Get the Intent that started this activity and extract the string
+        Intent intent = getIntent();
+        String macAddress = intent.getStringExtra(SetupActivity.MAC_ADDRESS);
+
+        functionHandler = new FunctionHandler(macAddress);
         //Button b = findViewById(R.id.button1);
         //functionHandler.registerButton(b, Controls.LED_TOGGLE);
         functionHandler.registerButton((Button)findViewById(R.id.button1), Controls.LED_TOGGLE);        // x: 53, y: 634
