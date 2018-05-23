@@ -7,17 +7,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.app.LoaderManager.LoaderCallbacks;
-
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.AsyncTask;
-
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,13 +17,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * A login screen that offers login via email/password.
+ * A Setup Activity to set parameters like MAC-Address
  */
-public class SetupActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+public class SetupActivity extends AppCompatActivity {
 
     public static final String MAC_ADDRESS = "mac_address";//"com.example.myfirstapp.MESSAGE";
     private static SharedPreferences sharedPreferences;
@@ -103,11 +92,10 @@ public class SetupActivity extends AppCompatActivity implements LoaderCallbacks<
             focusView = mMacAddressView;
             cancel = true;
         } else if (!isMacAddressValid(macAddress)) {
-            //mMacAddressView.setError(getString(R.string.error_invalid_email));
-            //focusView = mMacAddressView;
-            //cancel = true;
+            mMacAddressView.setError("invalid mac address");
+            focusView = mMacAddressView;
+            cancel = true;
 
-            //macAddress = sharedPreferences.getString("macAddress", "");
         }
 
         if (cancel) {
@@ -118,7 +106,7 @@ public class SetupActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            sharedPreferences.edit().putString("macAddress", macAddress).apply();
+            sharedPreferences.edit().putString(MAC_ADDRESS, macAddress).apply();
             mSetupTask = new SetupTask(macAddress);
             mSetupTask.execute((Void) null);
         }
@@ -165,48 +153,6 @@ public class SetupActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
-    @Override
-    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        return new CursorLoader(this,
-                // Retrieve data rows for the device user's 'profile' contact.
-                Uri.withAppendedPath(ContactsContract.Profile.CONTENT_URI,
-                        ContactsContract.Contacts.Data.CONTENT_DIRECTORY), ProfileQuery.PROJECTION,
-
-                // Select only email addresses.
-                ContactsContract.Contacts.Data.MIMETYPE +
-                        " = ?", new String[]{ContactsContract.CommonDataKinds.Email
-                .CONTENT_ITEM_TYPE},
-
-                // Show primary email addresses first. Note that there won't be
-                // a primary email address if the user hasn't specified one.
-                ContactsContract.Contacts.Data.IS_PRIMARY + " DESC");
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        List<String> emails = new ArrayList<>();
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            emails.add(cursor.getString(ProfileQuery.ADDRESS));
-            cursor.moveToNext();
-        }
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> cursorLoader) {
-
-    }
-
-    private interface ProfileQuery {
-        String[] PROJECTION = {
-                ContactsContract.CommonDataKinds.Email.ADDRESS,
-                ContactsContract.CommonDataKinds.Email.IS_PRIMARY,
-        };
-
-        int ADDRESS = 0;
-        int IS_PRIMARY = 1;
-    }
-
     /**
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
@@ -239,6 +185,9 @@ public class SetupActivity extends AppCompatActivity implements LoaderCallbacks<
             }
 
             // TODO: register the new account here.
+
+
+
             return true;
         }
 
@@ -256,8 +205,8 @@ public class SetupActivity extends AppCompatActivity implements LoaderCallbacks<
                 startActivity(intent);
 
             } else {
-                //mPasswordView.setError(getString(R.string.error_incorrect_password));
-                //mPasswordView.requestFocus();
+                mMacAddressView.setError("Something is wrong");
+                mMacAddressView.requestFocus();
             }
         }
 
