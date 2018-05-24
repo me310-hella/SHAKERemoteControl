@@ -46,12 +46,14 @@ public class FullscreenActivity extends AppCompatActivity {
                 findViewById(R.id.button1),
                 findViewById(R.id.button2),
                 findViewById(R.id.button3),
-                findViewById(R.id.button4)};
+                findViewById(R.id.button4),
+                findViewById(R.id.button5),
+                findViewById(R.id.button6)};
         this.buttons = Arrays.asList(buttonsArray);
         controlView = new MainControlView(buttons);
         controlView.show();
 
-        buttons.get(3).setOnClickListener(new View.OnClickListener() {
+        buttons.get(5).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 controlView = new MainControlView(buttons);
