@@ -40,10 +40,10 @@ public class FullscreenActivity extends AppCompatActivity {
         boolean useButtonInput = intent.getBooleanExtra(SetupActivity.USE_BUTTON_INPUT, true);
 
         functionHandler = new FunctionHandler(macAddress, useButtonInput);
-        functionHandler.registerButton((Button)findViewById(R.id.button1), Controls.LED_TOGGLE);        // x: 53, y: 634
-        functionHandler.registerButton((Button)findViewById(R.id.button2), Controls.FUNCTION_TWO);      // x: 593 y: 634
-        functionHandler.registerButton((Button)findViewById(R.id.button3), Controls.FUNCTION_THREE);    // x: 53 y: 1304
-        functionHandler.registerButton((Button)findViewById(R.id.button4), Controls.FUNCTION_FOUR);     // x: 593 y: 1304
+        functionHandler.registerButton((Button)findViewById(R.id.button0), Controls.LED_TOGGLE);        // x: 53, y: 634
+        functionHandler.registerButton((Button)findViewById(R.id.button1), Controls.FUNCTION_TWO);      // x: 593 y: 634
+        functionHandler.registerButton((Button)findViewById(R.id.button2), Controls.FUNCTION_THREE);    // x: 53 y: 1304
+        functionHandler.registerButton((Button)findViewById(R.id.button3), Controls.FUNCTION_FOUR);     // x: 593 y: 1304
     }
 
     @Override
