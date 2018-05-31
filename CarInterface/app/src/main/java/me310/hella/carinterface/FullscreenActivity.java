@@ -1,12 +1,20 @@
 package me310.hella.carinterface;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+
+import me310.hella.carinterface.statecontrol.ControlView;
+import me310.hella.carinterface.statecontrol.MainControlView;
+import me310.hella.carinterface.statecontrol.Triggers;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -14,13 +22,13 @@ import android.widget.Button;
  */
 public class FullscreenActivity extends AppCompatActivity {
 
-    private View mContentView;
-    private View mControlsView;
+    private ControlView controlView;
 
-    private FunctionHandler functionHandler;
+    List<Button> buttons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
         //Remove title bar
@@ -31,20 +39,43 @@ public class FullscreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_fullscreen);
         getSupportActionBar().hide();
 
-        mControlsView = findViewById(R.id.fullscreen_content_controls);
-        mContentView = findViewById(R.id.fullscreen_content);
-
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
         String macAddress = intent.getStringExtra(SetupActivity.MAC_ADDRESS);
-        boolean useButtonInput = intent.getBooleanExtra(SetupActivity.USE_BUTTON_INPUT, true);
+        Button[] buttonsArray = {
+                findViewById(R.id.button1),
+                findViewById(R.id.button2),
+                findViewById(R.id.button3),
+                findViewById(R.id.button4)};
+        this.buttons = Arrays.asList(buttonsArray);
+        controlView = new MainControlView(buttons);
+        controlView.show();
 
-        functionHandler = new FunctionHandler(macAddress, useButtonInput);
-        functionHandler.registerButton((Button)findViewById(R.id.button1), Controls.LED_TOGGLE);        // x: 53, y: 634
-        functionHandler.registerButton((Button)findViewById(R.id.button2), Controls.FUNCTION_TWO);      // x: 593 y: 634
-        functionHandler.registerButton((Button)findViewById(R.id.button3), Controls.FUNCTION_THREE);    // x: 53 y: 1304
-        functionHandler.registerButton((Button)findViewById(R.id.button4), Controls.FUNCTION_FOUR);     // x: 593 y: 1304
+        buttons.get(3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                controlView = new MainControlView(buttons);
+            }
+        });
+
+        try {
+            BluetoothHandler bluetoothHandler = new BluetoothHandler(macAddress, this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+    public void processEvent(Triggers t) {
+        if (t.equals(Triggers.BACK)) {
+            controlView = new MainControlView(buttons);
+
+        } else {
+            controlView = controlView.doAction(t);
+        }
+        controlView.show();
+    }
+
+
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {

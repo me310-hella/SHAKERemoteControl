@@ -3,29 +3,20 @@ package me310.hella.carinterface;
 import java.io.IOException;
 import java.io.InputStream;
 
+import me310.hella.carinterface.statecontrol.Triggers;
+
 public class BluetoothReader implements Runnable {
 
     InputStream mmInputStream;
     private final byte DELIMITER = 10;
     private final byte[] readBuffer = new byte[1024];
     private int readBufferPosition = 0;
-    private FunctionHandler functionHandler;
-    private boolean useButtonInput;
+    private FullscreenActivity mainActivity;
 
 
-    public BluetoothReader(FunctionHandler functionHandler, InputStream inputStream, boolean useButtonInput){
+    public BluetoothReader(InputStream inputStream, FullscreenActivity mainActivity){
+        this.mainActivity = mainActivity;
         this.mmInputStream = inputStream;
-        this.functionHandler = functionHandler;
-        this.useButtonInput = useButtonInput;
-    }
-
-    private int[] toInts (String sentData){
-        String[] splitData = sentData.split(",");
-        int [] intData = new int[2];
-        intData[0] = Integer.parseInt(splitData[0]);
-        intData[1] = Integer.parseInt(splitData[1]);
-        return intData;
-        //return Arrays.stream(splitData).map(Float::valueOf).toArray(Float[]::new);
     }
 
     @Override
@@ -50,14 +41,8 @@ public class BluetoothReader implements Runnable {
                             byte[] encodedBytes = new byte[readBufferPosition];
                             System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.length);
                             String data = new String(encodedBytes, "US-ASCII");
-                            //System.out.println("data: " + data);
                             readBufferPosition = 0;
-                            if(useButtonInput){
-                                processButtonInput(data);
-                            }
-                            else{
-                                processPositionInput(data);
-                            }
+                            mainActivity.processEvent(getTrigger(data));
                         }
                         else
                         {
@@ -73,14 +58,17 @@ public class BluetoothReader implements Runnable {
         }
     }
 
-    private void processButtonInput(String data) {
-        int buttonNumber = Integer.parseInt(data);
-        functionHandler.executeFunction(buttonNumber);
-    }
 
-    private void processPositionInput(String data){
-        final int[] position = toInts(data);
-        functionHandler.executeFunction(position);
+    private Triggers getTrigger(String data) {
+        int index;
+        try {
+            index = Integer.valueOf(data);
+        } catch (NumberFormatException e) {
+            return null;
+        }
+        if (index >= Triggers.values().length) {
+            return null;
+        }
+        return Triggers.values()[Integer.valueOf(data)];
     }
-
 }
