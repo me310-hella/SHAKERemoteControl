@@ -14,6 +14,8 @@ import java.util.Map;
 public class FunctionHandler extends Activity{
 
     private static final int ACCENT_COLOR = Color.parseColor("#FF4081");
+    private static final int EXTENT_RADIUS_X = 100;
+    private static final int EXTENT_RADIUS_Y = 50;
     private static BluetoothHandler bluetoothHandler;
     private List<Button> buttons;
     private Map<Button, Controls> controlMap;
@@ -45,8 +47,9 @@ public class FunctionHandler extends Activity{
 
             int[] buttonPos = new int[2];
             button.getLocationOnScreen(buttonPos);
-            final int EXTENT_RADIUS = 50;
-            Rect extent = new Rect(buttonPos[0] - EXTENT_RADIUS, buttonPos[1] - EXTENT_RADIUS, buttonPos[0] + EXTENT_RADIUS, buttonPos[1] + EXTENT_RADIUS);
+
+            /** hacky workaround for button position **/
+            Rect extent = new Rect(buttonPos[0] - EXTENT_RADIUS_X, buttonPos[1] - EXTENT_RADIUS_Y, buttonPos[0] + EXTENT_RADIUS_X, buttonPos[1] + EXTENT_RADIUS_Y);
             if(extent.contains(touchPosition[0], touchPosition[1])){
                 setButtonColorMock(button);
                 try {
