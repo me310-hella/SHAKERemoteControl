@@ -2,29 +2,15 @@ package me310.hella.carinterface.statecontrol;
 
 import me310.hella.carinterface.R;
 
-public class FanControlView extends ControlView {
-
-
-    public FanControlView() {
-    }
-
+public class CustomizeView extends ControlView {
     @Override
     public ControlView topLeft() {
-        if (activated) {
-            topLeftButton.setBackgroundColor(defaultColor);
-            activated = false;
-
-        } else {
-            topLeftButton.setBackgroundColor(activatedColor);
-            activated = true;
-        }
-        return this;
+        return null;
     }
 
     @Override
     public ControlView topRight() {
-        return this;
-
+        return null;
     }
 
     @Override
@@ -44,13 +30,11 @@ public class FanControlView extends ControlView {
 
     @Override
     public ControlView bottomRight() {
-        return this;
-
+        return null;
     }
 
     @Override
     public void show() {
-        imageView.setImageBitmap(decodeSampledBitmapFromResource(resources, R.drawable.fan, REQUIRED_IMAGE_WIDTH, REQUIRED_IMAGE_HEIGHT));
-
+        imageView.setImageBitmap(decodeSampledBitmapFromResource(resources, R.drawable.main_customize, REQUIRED_IMAGE_WIDTH, REQUIRED_IMAGE_HEIGHT));
     }
 }

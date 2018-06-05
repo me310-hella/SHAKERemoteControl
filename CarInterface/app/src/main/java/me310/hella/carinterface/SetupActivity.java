@@ -200,7 +200,7 @@ public class SetupActivity extends AppCompatActivity {
 
             if (success) {
                 finish();
-                Intent intent = new Intent(SetupActivity.this, FullscreenActivity.class);
+                Intent intent = new Intent(SetupActivity.this, ExpeActivity.class);
                 EditText editText = (EditText) findViewById(R.id.mac_address);
                 String macAddress = editText.getText().toString();
                 intent.putExtra(MAC_ADDRESS, macAddress);

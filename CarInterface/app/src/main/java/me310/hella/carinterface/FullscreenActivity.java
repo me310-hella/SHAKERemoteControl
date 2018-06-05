@@ -68,7 +68,7 @@ public class FullscreenActivity extends AppCompatActivity {
     }
 
     public void processEvent(Triggers t) {
-        if (t.equals(Triggers.BACK)) {
+        if (t.equals(Triggers.TOP_RIGHT)) {
             controlView = new MainControlView(buttons);
 
         } else {

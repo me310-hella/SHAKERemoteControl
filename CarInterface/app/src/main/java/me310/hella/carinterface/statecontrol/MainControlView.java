@@ -4,24 +4,43 @@ import android.widget.Button;
 
 import java.util.List;
 
+import me310.hella.carinterface.R;
+
 public class MainControlView extends ControlView {
 
-
+    private boolean lightOn = false;
 
 
     public MainControlView(List<Button> buttons) {
         super(buttons);
     }
+    public MainControlView(){}
 
     @Override
     public ControlView topLeft() {
-        return new FanControlView(buttons);
+        toggleLight();
+        return this;
     }
 
     @Override
     public ControlView topRight() {
-       return this;
+        return new FanControlView();
 
+    }
+
+    @Override
+    public ControlView middleLeft() {
+        return new CustomizeView();
+    }
+
+    @Override
+    public ControlView middleRight() {
+        return new NavigationView();
+    }
+
+    @Override
+    public ControlView bottomLeft() {
+        return new MusicView();
     }
 
     @Override
@@ -32,6 +51,13 @@ public class MainControlView extends ControlView {
 
     @Override
     public void show() {
-        topLeftButton.setText("Fan Control");
+        imageView.setImageBitmap(decodeSampledBitmapFromResource(resources, R.drawable.main_lightoff_yellow, REQUIRED_IMAGE_WIDTH, REQUIRED_IMAGE_HEIGHT));
     }
+
+    private void toggleLight(){
+        int imageId = lightOn ? R.drawable.main_lightoff_yellow : R.drawable.main_lighton_yellow;
+        imageView.setImageBitmap(decodeSampledBitmapFromResource(resources, imageId, REQUIRED_IMAGE_WIDTH, REQUIRED_IMAGE_HEIGHT));
+        lightOn = !lightOn;
+    }
+
 }
