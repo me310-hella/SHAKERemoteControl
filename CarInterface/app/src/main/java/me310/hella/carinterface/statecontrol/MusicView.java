@@ -1,10 +1,7 @@
 package me310.hella.carinterface.statecontrol;
 
 import android.media.MediaPlayer;
-import android.widget.Button;
 import android.widget.ImageView;
-
-import java.util.List;
 
 import me310.hella.carinterface.R;
 
@@ -13,13 +10,13 @@ public class MusicView extends ControlView {
     private boolean playing;
     private final MediaPlayer mp = MediaPlayer.create(this.ctx, R.raw.soho);
 
-    public MusicView(List<Button> buttons, ImageView imageView) {
-        super(buttons, imageView);
+    public MusicView(ImageView imageView) {
+        super(imageView);
     }
 
     @Override
     public ControlView topLeft() {
-        return null;
+        return this;
     }
 
     @Override
@@ -35,29 +32,29 @@ public class MusicView extends ControlView {
 
     @Override
     public ControlView bottomLeft() {
-        return null;
+        return this;
     }
 
     @Override
     public ControlView bottomRight() {
-        return null;
+        return this;
     }
 
     @Override
     public void show() {
-        imageView.setImageResource(R.drawable.music_pause);
+        int imageId = playing ? R.drawable.music_play : R.drawable.music_pause;
+        imageView.setImageResource(imageId);
     }
 
     private void toggleMusic(){
         if(!playing){
             mp.start();
-            imageView.setImageResource(R.drawable.music_play);
         }
         else{
             mp.pause();
-            imageView.setImageResource(R.drawable.music_pause);
         }
         playing = !playing;
+        show();
 
     }
 }

@@ -5,11 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-
-import java.util.List;
 
 import me310.hella.carinterface.FullscreenActivity;
 
@@ -18,13 +14,6 @@ public abstract class ControlView {
     protected static int defaultColor = Color.parseColor("#FFFFFF");
     protected static int activatedColor = Color.parseColor("#FF0000");
     protected boolean activated = false;
-    protected Button topLeftButton;
-    protected Button topRightButton;
-    protected Button middleLeftButton;
-    protected Button middleRightButton;
-    protected Button bottomRightButton;
-    protected Button bottomLeftButton;
-    protected List<Button> buttons;
     protected Context ctx;
 
     protected ImageView imageView;
@@ -32,54 +21,9 @@ public abstract class ControlView {
     protected final int REQUIRED_IMAGE_HEIGHT = 800;
     protected Resources resources; // TODO: set them
 
-    public ControlView(final List<Button> buttons, final ImageView imageView) {
+    public ControlView(final ImageView imageView) {
         this.imageView = imageView;
         this.ctx = FullscreenActivity.ctx;
-        this.buttons = buttons;
-        this.topLeftButton = buttons.get(0);
-        this.topRightButton = buttons.get(1);
-        this.middleLeftButton = buttons.get(2);
-        this.middleRightButton = buttons.get(3);
-        this.bottomLeftButton = buttons.get(4);
-        this.bottomRightButton = buttons.get(5);
-
-        topLeftButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                topLeft();
-            }
-        });
-        topRightButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                topRight();
-            }
-        });
-
-        middleLeftButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                middleLeft();
-            }
-        });
-        middleRightButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                middleRight();
-            }
-        });
-        bottomLeftButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                bottomLeft();
-            }
-        });
-        bottomRightButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                bottomRight();
-            }
-        });
     }
 
     public ControlView doAction(Triggers t) {

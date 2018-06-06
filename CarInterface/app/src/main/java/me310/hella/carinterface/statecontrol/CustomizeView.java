@@ -1,41 +1,43 @@
 package me310.hella.carinterface.statecontrol;
 
-import android.widget.Button;
 import android.widget.ImageView;
-
-import java.util.List;
 
 import me310.hella.carinterface.R;
 
 public class CustomizeView extends ControlView {
 
-    public CustomizeView(List<Button> buttons, ImageView imageView) {
-        super(buttons, imageView);
+    public CustomizeView(ImageView imageView) {
+        super(imageView);
     }
 
     @Override
     public ControlView topLeft() {
-        return null;
+        return this;
+    }
+
+    @Override
+    public ControlView topRight(){
+        return StateController.getFanView();
     }
 
     @Override
     public ControlView middleLeft() {
-        return null;
+        return this;
     }
 
     @Override
     public ControlView middleRight() {
-        return null;
+        return this;
     }
 
     @Override
     public ControlView bottomLeft() {
-        return null;
+        return this;
     }
 
     @Override
     public ControlView bottomRight() {
-        return null;
+        return this;
     }
 
     @Override

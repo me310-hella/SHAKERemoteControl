@@ -1,26 +1,23 @@
 package me310.hella.carinterface.statecontrol;
 
-import android.widget.Button;
 import android.widget.ImageView;
-
-import java.util.List;
 
 import me310.hella.carinterface.R;
 
 public class FanControlView extends ControlView {
 
-    public FanControlView(List<Button> buttons, ImageView imageView) {
-        super(buttons, imageView);
+    public FanControlView(ImageView imageView) {
+        super(imageView);
     }
 
     @Override
     public ControlView topLeft() {
         if (activated) {
-            topLeftButton.setBackgroundColor(defaultColor);
+
             activated = false;
 
         } else {
-            topLeftButton.setBackgroundColor(activatedColor);
+
             activated = true;
         }
         return this;
@@ -28,17 +25,17 @@ public class FanControlView extends ControlView {
 
     @Override
     public ControlView middleLeft() {
-        return null;
+        return this;
     }
 
     @Override
     public ControlView middleRight() {
-        return null;
+        return this;
     }
 
     @Override
     public ControlView bottomLeft() {
-        return null;
+        return this;
     }
 
     @Override

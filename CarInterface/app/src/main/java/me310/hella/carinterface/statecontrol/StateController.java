@@ -1,9 +1,6 @@
 package me310.hella.carinterface.statecontrol;
 
-import android.widget.Button;
 import android.widget.ImageView;
-
-import java.util.List;
 
 public class StateController {
 
@@ -13,12 +10,12 @@ public class StateController {
     private static MusicView musicView;
     private static NavigationView navView;
 
-    public static void initializeViews(List<Button> buttons, ImageView view) {
-        customView = new CustomizeView(buttons, view);
-        fanView = new FanControlView(buttons, view);
-        mainView = new MainControlView(buttons, view);
-        musicView = new MusicView(buttons, view);
-        navView = new NavigationView(buttons, view);
+    public static void initializeViews(ImageView view) {
+        customView = new CustomizeView(view);
+        fanView = new FanControlView(view);
+        mainView = new MainControlView(view);
+        musicView = new MusicView(view);
+        navView = new NavigationView(view);
     }
 
     public static CustomizeView getCustomView() {

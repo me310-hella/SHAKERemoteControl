@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -58,7 +59,7 @@ public class FullscreenActivity extends AppCompatActivity {
 
         imageView = findViewById(R.id.imageView);
         ctx = this.getApplicationContext();
-        StateController.initializeViews(buttons, imageView);
+        StateController.initializeViews(imageView);
         controlView = StateController.getMainView();
 
         try {
@@ -66,6 +67,48 @@ public class FullscreenActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+        buttons.get(0).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                controlView = controlView.topLeft();
+
+            }
+        });
+        buttons.get(1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                controlView = controlView.topRight();
+            }
+        });
+
+        buttons.get(2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                controlView = controlView.middleLeft();
+            }
+        });
+        buttons.get(3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                controlView = controlView.middleRight();
+            }
+        });
+        buttons.get(4).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                controlView = controlView.bottomLeft();
+            }
+        });
+        buttons.get(5).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                controlView = controlView.bottomRight();
+            }
+        });
+
+
     }
 
     public void processEvent(Triggers t) {
