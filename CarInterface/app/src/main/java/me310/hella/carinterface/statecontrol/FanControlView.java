@@ -27,12 +27,6 @@ public class FanControlView extends ControlView {
     }
 
     @Override
-    public ControlView topRight() {
-        return this;
-
-    }
-
-    @Override
     public ControlView middleLeft() {
         return null;
     }

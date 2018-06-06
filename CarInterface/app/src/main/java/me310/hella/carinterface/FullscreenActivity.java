@@ -59,15 +59,6 @@ public class FullscreenActivity extends AppCompatActivity {
         imageView = findViewById(R.id.imageView);
         ctx = this.getApplicationContext();
         controlView = new MainControlView(buttons, imageView);
-        controlView.show();
-
-
-        buttons.get(5).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                controlView = new MainControlView(buttons, imageView);
-            }
-        });
 
         try {
             BluetoothHandler bluetoothHandler = new BluetoothHandler(macAddress, this);
@@ -77,13 +68,7 @@ public class FullscreenActivity extends AppCompatActivity {
     }
 
     public void processEvent(Triggers t) {
-        if (t.equals(Triggers.TOP_RIGHT) && (controlView.getClass().equals(MainControlView.class))) {
-            controlView = new MainControlView(buttons, imageView);
-
-        } else {
-            controlView = controlView.doAction(t);
-        }
-        controlView.show();
+        controlView = controlView.doAction(t);
     }
 
 

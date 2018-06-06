@@ -19,11 +19,6 @@ public class NavigationView extends ControlView {
     }
 
     @Override
-    public ControlView topRight() {
-        return null;
-    }
-
-    @Override
     public ControlView middleLeft() {
         return null;
     }

@@ -25,7 +25,6 @@ public class MainControlView extends ControlView {
     @Override
     public ControlView topRight() {
         return new FanControlView(buttons, imageView);
-
     }
 
     @Override

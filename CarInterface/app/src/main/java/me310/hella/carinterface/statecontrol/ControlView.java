@@ -34,7 +34,7 @@ public abstract class ControlView {
     protected final int REQUIRED_IMAGE_HEIGHT = 800;
     protected Resources resources; // TODO: set them
 
-    public ControlView(List<Button> buttons, ImageView imageView) {
+    public ControlView(final List<Button> buttons, final ImageView imageView) {
         this.imageView = imageView;
         this.ctx = FullscreenActivity.ctx;
         this.buttons = buttons;
@@ -70,12 +70,21 @@ public abstract class ControlView {
                 middleRight();
             }
         });
+        bottomLeftButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomLeft();
+            }
+        });
         bottomRightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 bottomRight();
             }
         });
+
+        show();
+
     }
 
     public ControlView doAction(Triggers t) {
@@ -98,7 +107,9 @@ public abstract class ControlView {
     }
 
     public abstract ControlView topLeft();
-    public abstract ControlView topRight();
+    public ControlView topRight(){
+        return new MainControlView(buttons, imageView);
+    }
     public abstract ControlView middleLeft();
     public abstract ControlView middleRight();
     public abstract ControlView bottomLeft();
