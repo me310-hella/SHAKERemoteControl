@@ -59,7 +59,7 @@ public class FullscreenActivity extends AppCompatActivity {
         imageView = findViewById(R.id.imageView);
         ctx = this.getApplicationContext();
         StateController.initializeViews(buttons, imageView);
-        controlView = StateController.mainView;
+        controlView = StateController.getMainView();
 
         try {
             BluetoothHandler bluetoothHandler = new BluetoothHandler(macAddress, this);

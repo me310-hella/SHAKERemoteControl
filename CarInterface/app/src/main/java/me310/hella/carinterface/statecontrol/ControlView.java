@@ -5,8 +5,6 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.media.Image;
-import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -82,9 +80,6 @@ public abstract class ControlView {
                 bottomRight();
             }
         });
-
-        show();
-
     }
 
     public ControlView doAction(Triggers t) {
@@ -108,7 +103,7 @@ public abstract class ControlView {
 
     public abstract ControlView topLeft();
     public ControlView topRight(){
-        return StateController.mainView;
+        return StateController.getMainView();
     }
     public abstract ControlView middleLeft();
     public abstract ControlView middleRight();
