@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -16,6 +15,7 @@ import java.util.List;
 
 import me310.hella.carinterface.statecontrol.ControlView;
 import me310.hella.carinterface.statecontrol.MainControlView;
+import me310.hella.carinterface.statecontrol.StateController;
 import me310.hella.carinterface.statecontrol.Triggers;
 
 /**
@@ -58,7 +58,8 @@ public class FullscreenActivity extends AppCompatActivity {
 
         imageView = findViewById(R.id.imageView);
         ctx = this.getApplicationContext();
-        controlView = new MainControlView(buttons, imageView);
+        StateController.initializeViews(buttons, imageView);
+        controlView = StateController.mainView;
 
         try {
             BluetoothHandler bluetoothHandler = new BluetoothHandler(macAddress, this);

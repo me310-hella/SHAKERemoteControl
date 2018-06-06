@@ -24,22 +24,23 @@ public class MainControlView extends ControlView {
 
     @Override
     public ControlView topRight() {
-        return new FanControlView(buttons, imageView);
+        return StateController.fanView;
+
     }
 
     @Override
     public ControlView middleLeft() {
-        return new CustomizeView(buttons, imageView);
+        return StateController.customView;
     }
 
     @Override
     public ControlView middleRight() {
-        return new NavigationView(buttons, imageView);
+        return StateController.navView;
     }
 
     @Override
     public ControlView bottomLeft() {
-        return new MusicView(buttons, imageView);
+        return StateController.musicView;
     }
 
     @Override

@@ -45,19 +45,16 @@ public class MusicView extends ControlView {
 
     @Override
     public void show() {
-        //imageView.setImageBitmap(decodeSampledBitmapFromResource(resources, R.drawable.music_pause, REQUIRED_IMAGE_WIDTH, REQUIRED_IMAGE_HEIGHT));
         imageView.setImageResource(R.drawable.music_pause);
     }
 
     private void toggleMusic(){
         if(!playing){
             mp.start();
-            //imageView.setImageBitmap(decodeSampledBitmapFromResource(resources, R.drawable.music_play, REQUIRED_IMAGE_WIDTH, REQUIRED_IMAGE_HEIGHT));
             imageView.setImageResource(R.drawable.music_play);
         }
         else{
             mp.pause();
-            //imageView.setImageBitmap(decodeSampledBitmapFromResource(resources, R.drawable.music_pause, REQUIRED_IMAGE_WIDTH, REQUIRED_IMAGE_HEIGHT));
             imageView.setImageResource(R.drawable.music_pause);
         }
         playing = !playing;

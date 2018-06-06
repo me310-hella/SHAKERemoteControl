@@ -108,7 +108,7 @@ public abstract class ControlView {
 
     public abstract ControlView topLeft();
     public ControlView topRight(){
-        return new MainControlView(buttons, imageView);
+        return StateController.mainView;
     }
     public abstract ControlView middleLeft();
     public abstract ControlView middleRight();
