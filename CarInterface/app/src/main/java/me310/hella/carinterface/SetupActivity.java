@@ -89,8 +89,8 @@ public class SetupActivity extends AppCompatActivity {
         View focusView = null;
 
         // Check for a valid macAddress address.
-        if (TextUtils.isEmpty(macAddress)) {
-            mMacAddressView.setError(getString(R.string.error_field_required));
+        /*if (TextUtils.isEmpty(macAddress)) {
+            //mMacAddressView.setError(getString(R.string.error_field_required));
             focusView = mMacAddressView;
             cancel = true;
         } else if (!isMacAddressValid(macAddress)) {
@@ -98,7 +98,7 @@ public class SetupActivity extends AppCompatActivity {
             focusView = mMacAddressView;
             cancel = true;
 
-        }
+        }*/
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first
@@ -116,7 +116,8 @@ public class SetupActivity extends AppCompatActivity {
 
     private boolean isMacAddressValid(String macAddress) {
         //TODO: Replace this with your own logic
-        return macAddress.contains(":");
+        //return macAddress.contains(":");
+        return true;
     }
 
     /**
@@ -200,7 +201,7 @@ public class SetupActivity extends AppCompatActivity {
 
             if (success) {
                 finish();
-                Intent intent = new Intent(SetupActivity.this, ExpeActivity.class);
+                Intent intent = new Intent(SetupActivity.this, FullscreenActivity.class);
                 EditText editText = (EditText) findViewById(R.id.mac_address);
                 String macAddress = editText.getText().toString();
                 intent.putExtra(MAC_ADDRESS, macAddress);

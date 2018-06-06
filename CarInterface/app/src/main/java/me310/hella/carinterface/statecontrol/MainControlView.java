@@ -1,7 +1,7 @@
 package me310.hella.carinterface.statecontrol;
 
-import android.content.Context;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import java.util.List;
 
@@ -10,13 +10,11 @@ import me310.hella.carinterface.R;
 public class MainControlView extends ControlView {
 
     private boolean lightOn = false;
-    private Context ctx;
 
 
-    public MainControlView(List<Button> buttons) {
-        super(buttons);
+    public MainControlView(List<Button> buttons, ImageView imageView) {
+        super(buttons, imageView);
     }
-    public MainControlView(){}
 
     @Override
     public ControlView topLeft() {
@@ -26,23 +24,23 @@ public class MainControlView extends ControlView {
 
     @Override
     public ControlView topRight() {
-        return new FanControlView();
+        return new FanControlView(buttons, imageView);
 
     }
 
     @Override
     public ControlView middleLeft() {
-        return new CustomizeView();
+        return new CustomizeView(buttons, imageView);
     }
 
     @Override
     public ControlView middleRight() {
-        return new NavigationView();
+        return new NavigationView(buttons, imageView);
     }
 
     @Override
     public ControlView bottomLeft() {
-        return new MusicView();
+        return new MusicView(buttons, imageView);
     }
 
     @Override

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -28,6 +29,7 @@ public class FullscreenActivity extends AppCompatActivity {
     public static Context ctx;
 
     List<Button> buttons;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,15 +56,16 @@ public class FullscreenActivity extends AppCompatActivity {
                 findViewById(R.id.button6)};
         this.buttons = Arrays.asList(buttonsArray);
 
+        imageView = findViewById(R.id.imageView);
         ctx = this.getApplicationContext();
-        controlView = new MainControlView(buttons);
+        controlView = new MainControlView(buttons, imageView);
         controlView.show();
 
 
         buttons.get(5).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                controlView = new MainControlView(buttons);
+                controlView = new MainControlView(buttons, imageView);
             }
         });
 
@@ -75,7 +78,7 @@ public class FullscreenActivity extends AppCompatActivity {
 
     public void processEvent(Triggers t) {
         if (t.equals(Triggers.TOP_RIGHT)) {
-            controlView = new MainControlView(buttons);
+            controlView = new MainControlView(buttons, imageView);
 
         } else {
             controlView = controlView.doAction(t);

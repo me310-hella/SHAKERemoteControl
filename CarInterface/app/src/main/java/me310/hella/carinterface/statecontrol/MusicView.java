@@ -1,6 +1,10 @@
 package me310.hella.carinterface.statecontrol;
 
 import android.media.MediaPlayer;
+import android.widget.Button;
+import android.widget.ImageView;
+
+import java.util.List;
 
 import me310.hella.carinterface.R;
 
@@ -8,6 +12,10 @@ public class MusicView extends ControlView {
 
     private boolean playing;
     private final MediaPlayer mp = MediaPlayer.create(this.ctx, R.raw.soho);
+
+    public MusicView(List<Button> buttons, ImageView imageView) {
+        super(buttons, imageView);
+    }
 
     @Override
     public ControlView topLeft() {

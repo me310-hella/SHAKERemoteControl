@@ -5,6 +5,8 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.media.Image;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -31,7 +33,8 @@ public abstract class ControlView {
     protected Resources resources; // TODO: set them
 
 
-    public ControlView(List<Button> buttons) {
+    public ControlView(List<Button> buttons, ImageView imageView) {
+        this.imageView = imageView;
         this.ctx = FullscreenActivity.ctx;
         this.buttons = buttons;
         this.topLeftButton = buttons.get(0);
@@ -57,8 +60,6 @@ public abstract class ControlView {
             }
         });
     }
-
-    public ControlView(){}
 
     public ControlView doAction(Triggers t) {
         switch (t) {
