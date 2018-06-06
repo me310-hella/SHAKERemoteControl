@@ -7,7 +7,7 @@ import me310.hella.carinterface.R;
 public class MusicView extends ControlView {
 
     private boolean playing;
-    private static final MediaPlayer mp = MediaPlayer.create(this, R.raw.soho);
+    private final MediaPlayer mp = MediaPlayer.create(this.ctx, R.raw.soho);
 
     @Override
     public ControlView topLeft() {

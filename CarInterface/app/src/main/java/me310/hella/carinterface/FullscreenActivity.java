@@ -1,5 +1,6 @@
 package me310.hella.carinterface;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,8 @@ import me310.hella.carinterface.statecontrol.Triggers;
 public class FullscreenActivity extends AppCompatActivity {
 
     private ControlView controlView;
+
+    public static Context ctx;
 
     List<Button> buttons;
 
@@ -50,8 +53,11 @@ public class FullscreenActivity extends AppCompatActivity {
                 findViewById(R.id.button5),
                 findViewById(R.id.button6)};
         this.buttons = Arrays.asList(buttonsArray);
+
+        ctx = this.getApplicationContext();
         controlView = new MainControlView(buttons);
         controlView.show();
+
 
         buttons.get(5).setOnClickListener(new View.OnClickListener() {
             @Override

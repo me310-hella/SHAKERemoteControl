@@ -1,5 +1,6 @@
 package me310.hella.carinterface.statecontrol;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,6 +10,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import java.util.List;
+
+import me310.hella.carinterface.FullscreenActivity;
 
 public abstract class ControlView {
 
@@ -20,6 +23,7 @@ public abstract class ControlView {
     protected Button bottomRightButton;
     protected Button bottomLeftButton;
     protected List<Button> buttons;
+    protected Context ctx;
 
     protected ImageView imageView;
     protected final int REQUIRED_IMAGE_WIDTH = 800;
@@ -28,6 +32,7 @@ public abstract class ControlView {
 
 
     public ControlView(List<Button> buttons) {
+        this.ctx = FullscreenActivity.ctx;
         this.buttons = buttons;
         this.topLeftButton = buttons.get(0);
         this.topRightButton = buttons.get(1);

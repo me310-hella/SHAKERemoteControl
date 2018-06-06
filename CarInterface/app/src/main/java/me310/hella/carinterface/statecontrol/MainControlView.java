@@ -1,5 +1,6 @@
 package me310.hella.carinterface.statecontrol;
 
+import android.content.Context;
 import android.widget.Button;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import me310.hella.carinterface.R;
 public class MainControlView extends ControlView {
 
     private boolean lightOn = false;
+    private Context ctx;
 
 
     public MainControlView(List<Button> buttons) {
