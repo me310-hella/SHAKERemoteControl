@@ -30,7 +30,7 @@ public class MusicView extends ControlView {
 
     @Override
     public ControlView middleRight() {
-        return null;
+        return this.middleLeft();
     }
 
     @Override
