@@ -12,7 +12,7 @@ public class CustomizeView extends ControlView {
 
     @Override
     public ControlView topLeft() {
-        return this;
+        return StateController.getMainView();
     }
 
     @Override
@@ -22,27 +22,26 @@ public class CustomizeView extends ControlView {
 
     @Override
     public ControlView middleLeft() {
-        return this;
+        return StateController.getMainView();
     }
 
     @Override
     public ControlView middleRight() {
-        return this;
+        return StateController.getMainView();
     }
 
     @Override
     public ControlView bottomLeft() {
-        return this;
+        return StateController.getMainView();
     }
 
     @Override
     public ControlView bottomRight() {
-        return this;
+        return StateController.getMainView();
     }
 
     @Override
     public void show() {
-        imageView.setImageBitmap(decodeSampledBitmapFromResource(resources, R.drawable.main_customize, REQUIRED_IMAGE_WIDTH, REQUIRED_IMAGE_HEIGHT));
         imageView.setImageResource(R.drawable.main_customize);
     }
 }
