@@ -22,6 +22,8 @@ public abstract class ControlView {
     protected boolean activated = false;
     protected Button topLeftButton;
     protected Button topRightButton;
+    protected Button middleLeftButton;
+    protected Button middleRightButton;
     protected Button bottomRightButton;
     protected Button bottomLeftButton;
     protected List<Button> buttons;
@@ -32,31 +34,46 @@ public abstract class ControlView {
     protected final int REQUIRED_IMAGE_HEIGHT = 800;
     protected Resources resources; // TODO: set them
 
-
     public ControlView(List<Button> buttons, ImageView imageView) {
         this.imageView = imageView;
         this.ctx = FullscreenActivity.ctx;
         this.buttons = buttons;
         this.topLeftButton = buttons.get(0);
         this.topRightButton = buttons.get(1);
-        this.bottomRightButton = buttons.get(2);
-        this.bottomLeftButton = buttons.get(3);
+        this.middleLeftButton = buttons.get(2);
+        this.middleRightButton = buttons.get(3);
+        this.bottomLeftButton = buttons.get(4);
+        this.bottomRightButton = buttons.get(5);
+
         topLeftButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                topLeft().show();
+                topLeft();
             }
         });
         topRightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                topRight().show();
+                topRight();
+            }
+        });
+
+        middleLeftButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                middleLeft();
+            }
+        });
+        middleRightButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                middleRight();
             }
         });
         bottomRightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bottomRight().show();
+                bottomRight();
             }
         });
     }

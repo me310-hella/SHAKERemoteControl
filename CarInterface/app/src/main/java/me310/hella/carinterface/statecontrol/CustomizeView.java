@@ -46,5 +46,6 @@ public class CustomizeView extends ControlView {
     @Override
     public void show() {
         imageView.setImageBitmap(decodeSampledBitmapFromResource(resources, R.drawable.main_customize, REQUIRED_IMAGE_WIDTH, REQUIRED_IMAGE_HEIGHT));
+        imageView.setImageResource(R.drawable.main_customize);
     }
 }

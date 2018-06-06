@@ -55,7 +55,8 @@ public class FanControlView extends ControlView {
 
     @Override
     public void show() {
-        imageView.setImageBitmap(decodeSampledBitmapFromResource(resources, R.drawable.fan, REQUIRED_IMAGE_WIDTH, REQUIRED_IMAGE_HEIGHT));
+        //imageView.setImageBitmap(decodeSampledBitmapFromResource(resources, R.drawable.fan, REQUIRED_IMAGE_WIDTH, REQUIRED_IMAGE_HEIGHT));
+        imageView.setImageResource(R.drawable.fan);
 
     }
 }
