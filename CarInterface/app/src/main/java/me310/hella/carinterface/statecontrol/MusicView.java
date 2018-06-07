@@ -48,7 +48,7 @@ public class MusicView extends ControlView {
         //FullscreenActivity.ImageViewAnimatedChange(imageView, imageId);
     }
 
-    private void toggleMusic(){
+    protected void toggleMusic(){
         if(!playing){
             mp.start();
         }

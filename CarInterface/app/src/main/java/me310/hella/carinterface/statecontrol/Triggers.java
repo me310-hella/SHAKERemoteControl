@@ -6,5 +6,7 @@ public enum Triggers {
     MIDDLE_LEFT,
     MIDDLE_RIGHT,
     BOTTOM_LEFT,
-    BOTTOM_RIGHT
+    BOTTOM_RIGHT,
+    RADIO,
+    AC_CAR
 }

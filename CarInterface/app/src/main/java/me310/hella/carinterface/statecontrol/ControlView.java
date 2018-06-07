@@ -30,6 +30,10 @@ public abstract class ControlView {
                 return bottomLeft();
             case BOTTOM_RIGHT:
                 return bottomRight();
+            case RADIO:
+                return radio();
+            case AC_CAR:
+                return acCar();
             default:
                 return this;
         }
@@ -43,6 +47,15 @@ public abstract class ControlView {
     public abstract ControlView middleRight();
     public abstract ControlView bottomLeft();
     public abstract ControlView bottomRight();
+
+    public ControlView radio(){
+        StateController.getMusicView().toggleMusic();
+        return StateController.getMusicView();
+    }
+
+    public ControlView acCar(){
+        return StateController.getFanView();
+    }
 
     public abstract void show();
 }
