@@ -3,6 +3,7 @@ package me310.hella.carinterface.statecontrol;
 import android.media.MediaPlayer;
 import android.widget.ImageView;
 
+import me310.hella.carinterface.FullscreenActivity;
 import me310.hella.carinterface.R;
 
 public class MusicView extends ControlView {
@@ -44,6 +45,7 @@ public class MusicView extends ControlView {
     public void show() {
         int imageId = playing ? R.drawable.music_play : R.drawable.music_pause;
         imageView.setImageResource(imageId);
+        //FullscreenActivity.ImageViewAnimatedChange(imageView, imageId);
     }
 
     private void toggleMusic(){

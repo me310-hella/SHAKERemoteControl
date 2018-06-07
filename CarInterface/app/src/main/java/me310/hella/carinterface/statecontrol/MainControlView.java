@@ -47,9 +47,8 @@ public class MainControlView extends ControlView {
 
     @Override
     public void show() {
-        int imageId = lightOn ? R.drawable.main_lightoff_yellow : R.drawable.main_lighton_yellow;
+        int imageId = lightOn ? R.drawable.main_lighton_yellow : R.drawable.main_lightoff_yellow;
         imageView.setImageResource(imageId);
-        //imageView.setImageBitmap(decodeSampledBitmapFromResource(resources, R.drawable.main_lightoff_yellow, REQUIRED_IMAGE_WIDTH, REQUIRED_IMAGE_HEIGHT));
     }
 
     private void toggleLight(){

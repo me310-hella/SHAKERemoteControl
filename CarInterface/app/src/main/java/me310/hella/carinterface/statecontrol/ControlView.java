@@ -1,25 +1,15 @@
 package me310.hella.carinterface.statecontrol;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.widget.ImageView;
 
 import me310.hella.carinterface.FullscreenActivity;
 
 public abstract class ControlView {
 
-    protected static int defaultColor = Color.parseColor("#FFFFFF");
-    protected static int activatedColor = Color.parseColor("#FF0000");
-    protected boolean activated = false;
     protected Context ctx;
 
     protected ImageView imageView;
-    protected final int REQUIRED_IMAGE_WIDTH = 800;
-    protected final int REQUIRED_IMAGE_HEIGHT = 800;
-    protected Resources resources; // TODO: set them
 
     public ControlView(final ImageView imageView) {
         this.imageView = imageView;
@@ -31,7 +21,7 @@ public abstract class ControlView {
             case TOP_LEFT:
                 return topLeft();
             case TOP_RIGHT:
-                return topRight(); //This one should be BACK
+                return topRight();
             case MIDDLE_LEFT:
                 return middleLeft();
             case MIDDLE_RIGHT:
@@ -55,43 +45,4 @@ public abstract class ControlView {
     public abstract ControlView bottomRight();
 
     public abstract void show();
-
-    protected static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
-                                                          int reqWidth, int reqHeight) {
-
-        // First decode with inJustDecodeBounds=true to check dimensions
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(res, resId, options);
-
-        // Calculate inSampleSize
-        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-
-        // Decode bitmap with inSampleSize set
-        options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeResource(res, resId, options);
-    }
-
-    protected static int calculateInSampleSize(
-            BitmapFactory.Options options, int reqWidth, int reqHeight) {
-        // Raw height and width of image
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        int inSampleSize = 1;
-
-        if (height > reqHeight || width > reqWidth) {
-
-            final int halfHeight = height / 2;
-            final int halfWidth = width / 2;
-
-            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
-            // height and width larger than the requested height and width.
-            while ((halfHeight / inSampleSize) >= reqHeight
-                    && (halfWidth / inSampleSize) >= reqWidth) {
-                inSampleSize *= 2;
-            }
-        }
-
-        return inSampleSize;
-    }
 }

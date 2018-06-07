@@ -37,7 +37,6 @@ public class NavigationView extends ControlView {
 
     @Override
     public void show() {
-        //imageView.setImageBitmap(decodeSampledBitmapFromResource(resources, R.drawable.navigation, REQUIRED_IMAGE_WIDTH, REQUIRED_IMAGE_HEIGHT));
         imageView.setImageResource(R.drawable.navigation);
     }
 }

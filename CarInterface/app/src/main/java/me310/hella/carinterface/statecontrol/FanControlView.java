@@ -6,6 +6,8 @@ import me310.hella.carinterface.R;
 
 public class FanControlView extends ControlView {
 
+    public boolean activated = false;
+
     public FanControlView(ImageView imageView) {
         super(imageView);
     }
@@ -46,7 +48,6 @@ public class FanControlView extends ControlView {
 
     @Override
     public void show() {
-        //imageView.setImageBitmap(decodeSampledBitmapFromResource(resources, R.drawable.fan, REQUIRED_IMAGE_WIDTH, REQUIRED_IMAGE_HEIGHT));
         imageView.setImageResource(R.drawable.fan);
 
     }
