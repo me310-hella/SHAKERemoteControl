@@ -63,6 +63,7 @@ public class FullscreenActivity extends AppCompatActivity {
         ctx = this.getApplicationContext();
         StateController.initializeViews(imageView);
         controlView = StateController.getMainView();
+        macAddress = "20:16:12:28:24:70";
 
         try {
             BluetoothHandler bluetoothHandler = new BluetoothHandler(macAddress, this);
@@ -114,6 +115,9 @@ public class FullscreenActivity extends AppCompatActivity {
     }
 
     public void processEvent(Triggers t) {
+        if (t == null) {
+            return;
+        }
         controlView = controlView.doAction(t);
     }
 

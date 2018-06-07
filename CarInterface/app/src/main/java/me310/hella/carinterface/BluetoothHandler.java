@@ -28,6 +28,7 @@ public class BluetoothHandler {
                 if(bondedDevices.size() > 0) {
                     for(BluetoothDevice device : bondedDevices){
                         if(device.toString().equals(macAddress)){
+                            Log.i("info", "found device");
                             desiredDevice = device;
                             ParcelUuid[] uuids = desiredDevice.getUuids();
                             BluetoothSocket socket = desiredDevice.createRfcommSocketToServiceRecord(uuids[0].getUuid());
@@ -39,9 +40,9 @@ public class BluetoothHandler {
                             break;
                         }
                     }
+                } else {
+                    Log.e("error", "No appropriate paired devices.");
                 }
-
-                Log.e("error", "No appropriate paired devices.");
             } else {
                 Log.e("error", "Bluetooth is disabled.");
             }

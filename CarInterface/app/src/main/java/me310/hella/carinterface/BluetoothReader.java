@@ -1,11 +1,14 @@
 package me310.hella.carinterface;
 
+import android.app.Activity;
+import android.util.Log;
+
 import java.io.IOException;
 import java.io.InputStream;
 
 import me310.hella.carinterface.statecontrol.Triggers;
 
-public class BluetoothReader implements Runnable {
+public class BluetoothReader extends Activity implements Runnable{
 
     InputStream mmInputStream;
     private final byte DELIMITER = 10;
@@ -40,9 +43,14 @@ public class BluetoothReader implements Runnable {
 
                             byte[] encodedBytes = new byte[readBufferPosition];
                             System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.length);
-                            String data = new String(encodedBytes, "US-ASCII");
+                            final String data = new String(encodedBytes, "US-ASCII").trim();
                             readBufferPosition = 0;
-                            mainActivity.processEvent(getTrigger(data));
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mainActivity.processEvent(getTrigger(data));
+                                }
+                            });
                         }
                         else
                         {
@@ -64,11 +72,13 @@ public class BluetoothReader implements Runnable {
         try {
             index = Integer.valueOf(data);
         } catch (NumberFormatException e) {
+            Log.e("info", "Not a valid message " + data);
             return null;
         }
+        Log.i("info", "Received trigger " + index);
         if (index >= Triggers.values().length) {
             return null;
         }
-        return Triggers.values()[Integer.valueOf(data)];
+        return Triggers.values()[index - 1];
     }
 }
