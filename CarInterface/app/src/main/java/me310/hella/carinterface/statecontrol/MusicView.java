@@ -17,6 +17,7 @@ public class MusicView extends ControlView {
 
     @Override
     public ControlView topLeft() {
+        toggleMusic();
         return this;
     }
 
@@ -28,16 +29,19 @@ public class MusicView extends ControlView {
 
     @Override
     public ControlView middleRight() {
-        return this.middleLeft();
+        toggleMusic();
+        return this;
     }
 
     @Override
     public ControlView bottomLeft() {
+        toggleMusic();
         return this;
     }
 
     @Override
     public ControlView bottomRight() {
+        toggleMusic();
         return this;
     }
 

@@ -51,9 +51,13 @@ public class MainControlView extends ControlView {
         imageView.setImageResource(imageId);
     }
 
-    private void toggleLight(){
+    public void toggleLight(){
         lightOn = !lightOn;
         show();
+    }
+
+    public boolean isLightOn(){
+        return lightOn;
     }
 
 }

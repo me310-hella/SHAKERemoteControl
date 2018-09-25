@@ -76,7 +76,7 @@ public class BluetoothReader extends Activity implements Runnable{
             return null;
         }
         Log.i("info", "Received trigger " + index);
-        if (index >= Triggers.values().length) {
+        if (index >= Triggers.values().length || index < 1) {
             return null;
         }
         return Triggers.values()[index - 1];

@@ -12,12 +12,13 @@ public class CustomizeView extends ControlView {
 
     @Override
     public ControlView topLeft() {
+        StateController.getMainView().toggleLight();
         return StateController.getMainView();
     }
 
     @Override
     public ControlView topRight(){
-        return StateController.getFanView();
+        return StateController.getMainView();
     }
 
     @Override
@@ -42,6 +43,7 @@ public class CustomizeView extends ControlView {
 
     @Override
     public void show() {
-        imageView.setImageResource(R.drawable.main_customize);
+        int imageId = StateController.getMainView().isLightOn() ? R.drawable.main_customize_lighton : R.drawable.main_customize;
+        imageView.setImageResource(imageId);
     }
 }
